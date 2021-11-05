@@ -219,7 +219,7 @@ if __name__ == '__main__':
             torch.save(net.state_dict(), weights_path)
             best_acc = acc
             continue
-
+        # save the model per 'SAVE_EPOCH'
         if not epoch % settings.SAVE_EPOCH:
             weights_path = checkpoint_path.format(net=args.net, epoch=epoch, type='regular')
             print('saving weights file to {}'.format(weights_path))
