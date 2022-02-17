@@ -152,7 +152,12 @@ def get_network(args):
     elif args.net == 'stochasticdepth101':
         from models.stochasticdepth import stochastic_depth_resnet101
         net = stochastic_depth_resnet101()
-
+    elif args.net == 'conformer':
+        from models.conformer import conformer_tiny_batch16
+        net = conformer_tiny_batch16()
+    elif args.net == 'conformer_FPN':
+        from models.conformer_FPN import conformer_tiny_patch16_heads4
+        net = conformer_tiny_patch16_heads4()
     else:
         print('the network name you have entered is not supported yet')
         sys.exit()
@@ -235,7 +240,7 @@ class WarmUpLR(_LRScheduler):
     """warmup_training learning rate scheduler
     Args:
         optimizer: optimzier(e.g. SGD)
-        total_iters: totoal_iters of warmup phase
+        total_iters: totoal_iters of warmup phase， one epoch or two epochs selected by 'args.warm'
     """
     def __init__(self, optimizer, total_iters, last_epoch=-1):
 

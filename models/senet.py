@@ -53,6 +53,8 @@ class BasicResidualSEBlock(nn.Module):
         excitation = self.excitation(squeeze)
         excitation = excitation.view(residual.size(0), residual.size(1), 1, 1)
 
+        # excitation 维度为(B, C, 1, 1) 而residual的维度为(B, C, h, w)，为使channel attention应用到每一个位置，应当使用expand_as拓展excitation的维度。
+        # 这里每一个位置上的channel attention都是一样的
         x = residual * excitation.expand_as(residual) + shortcut
 
         return F.relu(x)
